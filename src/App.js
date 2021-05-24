@@ -5,6 +5,7 @@ export default function App() {
   const [text, setText] = useState("");
   const [randomNumber, setRandomNumber] = useState(randomNumberGenerator());
   const [result, setResult] = useState("");
+  const [score, setScore] = useState(0);
   window.SpeechRecognition =
     window.webkitSpeechRecognition || window.SpeechRecognition;
 
@@ -16,9 +17,11 @@ export default function App() {
       setResult(
         `Congratulations, you're a literate and you know how to read numbers.`
       );
+      setScore(score + 1);
+      setRandomNumber(randomNumberGenerator());
     }
     return () => setResult("");
-  }, [text, randomNumber]);
+  }, [text]);
 
   // useEffect(() => {
   recognition.addEventListener("result", (e) => {
@@ -43,12 +46,11 @@ export default function App() {
   return (
     <div className="App">
       <h1>Text</h1>
-
+      <h4>Score:{score}</h4>
       {result ? (
         <div>{result}</div>
       ) : (
         <div>
-          {" "}
           <p>{text}</p>
           <div>Number: {randomNumber}</div>
         </div>
